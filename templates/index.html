@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block body %}
+<script type="text/javascript">
+  $(function() {
+    var interval = 500;   //number of mili seconds between each call
+    var refresh = function() {
+        $.ajax({
+            url: "/clients",
+            cache: false,
+            success: function(html) {
+                $('#server-name').html(html);
+                console.log(html);
+                setTimeout(function() {
+                    refresh();
+                }, interval);
+            }
+        });
+    };
+    refresh();
+  });
+
+
+</script>
+<h1>Dungeon master</h1>
+<div id="server-name"></div>
+
+{% endblock %}

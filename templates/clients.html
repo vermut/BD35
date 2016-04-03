@@ -1,0 +1,13 @@
+<h3>Known clients</h3>
+<ul>
+    {% for key in clients %}
+    <li>{{ key }}:{{ clients[key].startup_distance }}cm</li>
+    {% endfor %}
+</ul>
+
+<h3>Data</h3>
+<ul>
+    {% for key in data %}
+    <li>{{ key }}:{{ data[key].dist }}cm = {{ data[key].time }} / {{ data[key].voltage }}V</li>
+    {% endfor %}
+</ul>
