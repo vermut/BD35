@@ -1,0 +1,31 @@
+.my-icon {
+/*    position: relative; */
+
+    float: left;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+
+}
+.my-icon > i {
+    position: absolute;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    line-height: 0;
+    border: 0.7em solid black;
+    border-radius: 0.7em;
+    left: 0em;
+    top: 0em;
+}
+
+.my-red > i {
+    border-color: solid red;
+}
+
+.container {
+/*    border: 1px solid #DDDDDD;
+    width: 200px;
+    height: 200px; */
+    position:relative;
+}

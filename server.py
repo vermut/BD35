@@ -9,12 +9,12 @@
 from time import strftime
 
 from flask import Flask, render_template, request
+from flask.ext.sqlalchemy import SQLAlchemy
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 my_clients = {}
 my_data = {}
-
 
 @app.route('/clients')
 def clients():
