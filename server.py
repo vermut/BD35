@@ -20,18 +20,11 @@ my_data = {}
 def clients():
     return render_template('clients.html', clients=my_clients, data=my_data)
 
-
-@app.route('/report/<id>/<int:distance>/<int:voltage>')
-def report(id, distance, voltage):
-    my_data[id] = {'dist': distance, 'time': strftime("%a, %d %b %Y %H:%M:%S +0000"), 'voltage': voltage}
-
-    return 'OK!'
-
-
 @app.route('/sensor_record', methods=['POST'])
 def sensor_report():
     content = request.get_json(force=True)
-    my_data[content['id']] = {'dist': content['distance'],
+    my_data[content['id']] = {'dist1': content['distance'],
+                              'dist2': content['distance2'],
                               'time': strftime("%a, %d %b %Y %H:%M:%S +0000"),
                               'voltage': content['voltage'] / 1000.0}
 

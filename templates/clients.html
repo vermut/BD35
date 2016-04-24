@@ -8,6 +8,6 @@
 <h3>Data</h3>
 <ul>
     {% for key in data %}
-    <li>{{ key }}:{{ data[key].dist }}cm = {{ data[key].time }} / {{ data[key].voltage }}V</li>
+    <li>{{ key }} => {{ data[key].dist1 }} / {{ data[key].dist2 }} @ {{ data[key].time }} ... {{ data[key].voltage }}V</li>
     {% endfor %}
 </ul>
