@@ -1,26 +1,30 @@
+
+
+
 <h3>Known clients</h3>
 <ul>
-    {% for key in clients %}
-    <li>{{ key }}:{{ clients[key].startup_distance }}cm</li>
+    {% for key in dungeon.clients %}
+    <li>{{ key }}:{{ dungeon.clients[key].startup_distance }}cm</li>
     {% endfor %}
 </ul>
 
 <h3>Data</h3>
 <ul>
-    {% for key in data %}
-    <li>{{ key }} => {{ data[key].dist1 }} / {{ data[key].dist2 }} @ {{ data[key].time }} ... {{ data[key].voltage }}V</li>
+    {% for key in dungeon.data %}
+    <li>{{ key }} => {{ dungeon.data[key].dist1 }} / {{ dungeon.data[key].dist2 }} @ {{ dungeon.data[key].time }} ... {{
+        dungeon.data[key].voltage }}V
+    </li>
     {% endfor %}
 </ul>
 
+<h3>State and History</h3>
+{% if dungeon.game %}
+{{ dungeon.game.state.status() }}
 
 <div class="container">
-
-    <i id="gate_A" class="my-icon" style="left: 10px; top: 10px"><i></i></i>
-    <i id="gate_B" class="my-icon" style="left: 30px; top: 40px"><i></i></i>
-    <i id="gate_C" class="my-icon" style="left: 50px; top: 50px"><i></i></i>
-    <i id="gate_D" class="my-icon" style="left: 70px; top: 70px"><i></i></i>
-
+    {% for gate, data in dungeon.game.state.gates() %}
+    <i id="gate_{{ gate }}" class="my-icon {{ data.style }} " style="left: {{ data.x }} px; top: {{ data.y }} px"><i></i></i>
+    {% endfor %}
     <img src="static/map.png"/>
-
-
 </div>
+{% endif %}

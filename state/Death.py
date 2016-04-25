@@ -1,3 +1,6 @@
 class Death:
+    def __init__(self, cause):
+        self.cause = cause
+
     def status(self):
-        print "Death"
+        return "Death by " + self.cause
