@@ -1,5 +1,3 @@
-import copy
-
 from Death import Death
 
 
@@ -13,9 +11,12 @@ class LevelState:
         vars(self)[gate][0] = '+'
 
     def go(self, gate):
-        if vars(self)[gate][0] is not "+":
-            # print "!!! DEAD"
+        if vars(self)[gate][0] is "-":
             return Death()
+
+
+        if vars(self)[gate][0] is "?":
+            print "HANDLE_SPECIAL"
 
         self.openGate(vars(self)[gate][1])
         return self
