@@ -1,6 +1,4 @@
 .my-icon {
-/*    position: relative; */
-
     float: left;
     position: absolute;
     left: 0px;
@@ -20,12 +18,9 @@
 }
 
 .my-red > i {
-    border-color: solid red;
+    border: 0.7em solid red;
 }
 
 .container {
-/*    border: 1px solid #DDDDDD;
-    width: 200px;
-    height: 200px; */
     position:relative;
 }

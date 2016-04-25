@@ -1,6 +1,3 @@
-
-
-
 <h3>Known clients</h3>
 <ul>
     {% for key in dungeon.clients %}
@@ -18,12 +15,21 @@
 </ul>
 
 <h3>State and History</h3>
-{% if dungeon.game %}
+{% if dungeon.game and dungeon.game.state %}
 {{ dungeon.game.state.status() }}
 
+<h5>State history</h5>
+<ol>
+{% for state in dungeon.game.stateHistory %}
+    <li>{{ state.status() }}</li>
+{% endfor %}
+</ol>
 <div class="container">
     {% for gate, data in dungeon.game.state.gates() %}
-    <i id="gate_{{ gate }}" class="my-icon {{ data.style }} " style="left: {{ data.x }} px; top: {{ data.y }} px"><i></i></i>
+    <a href="#" onclick="$.get('/go/{{gate}}')">
+        <i id="gate_{{ gate }}" class="my-icon {{ data['style'] }}"
+           style="left: {{ data['x'] }}px; top: {{ data['y'] }}px"><i></i></i>
+    </a>
     {% endfor %}
     <img src="static/map.png"/>
 </div>

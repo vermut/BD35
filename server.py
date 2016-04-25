@@ -72,6 +72,12 @@ def team2_start():
     return "OK"
 
 
+@app.route('/go/<gate>')
+def go(gate):
+    dungeon.trigger(gate)
+    return "OK"
+
+
 @app.route('/')
 def index():
     return render_template('index.html')

@@ -4,3 +4,6 @@ class Death:
 
     def status(self):
         return "Death by " + self.cause
+
+    def gates(self):
+        return {}

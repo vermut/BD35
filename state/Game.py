@@ -17,4 +17,4 @@ class Game():
 
     def trigger(self, gate):
         self.stateHistory.append(copy.deepcopy(self.state))
-        self.state.go(gate)
+        self.state = self.state.go(gate)
