@@ -19,11 +19,16 @@
 {{ dungeon.game.state.status() }}
 
 <h5>State history</h5>
-<ol>
+<a href="#" onclick="$.get('/rewind')">Rewind</a>
+<table border="1">
 {% for state in dungeon.game.stateHistory %}
-    <li>{{ state.status() }}</li>
+    <tr>
+        {% for gate in state.status() %}
+        <td>{{ gate }}</td>
+        {% endfor %}
+    </tr>
 {% endfor %}
-</ol>
+</table>
 <div class="container">
     {% for gate, data in dungeon.game.state.gates() %}
     <a href="#" onclick="$.get('/go/{{gate}}')">

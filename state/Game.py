@@ -18,3 +18,7 @@ class Game():
     def trigger(self, gate):
         self.stateHistory.append(copy.deepcopy(self.state))
         self.state = self.state.go(gate)
+
+    def rewind(self):
+        if len(self.stateHistory) > 0:
+            self.state = self.stateHistory.pop()

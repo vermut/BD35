@@ -21,7 +21,7 @@ class LevelState:
         return self
 
     def status(self):
-        return sorted(vars(self).items())
+        return [(k +'='+ ''.join(v)) for k,v in sorted(vars(self).items())]
 
     def gates(self):
         return {

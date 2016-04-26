@@ -35,6 +35,8 @@ class Dungeon():
     def trigger(self, gate):
         self.game.trigger(gate)
 
+    def rewind(self):
+        self.game.rewind()
 
 
 @app.route('/clients')
@@ -75,6 +77,11 @@ def team2_start():
 @app.route('/go/<gate>')
 def go(gate):
     dungeon.trigger(gate)
+    return "OK"
+
+@app.route('/rewind')
+def rewind():
+    dungeon.rewind()
     return "OK"
 
 
