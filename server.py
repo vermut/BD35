@@ -12,7 +12,7 @@ import pyglet
 from flask import Flask, render_template, request
 
 # from flask.ext.sqlalchemy import SQLAlchemy
-from state.Game import Game
+from state.Game import Game, Team
 from sensors import map_gate
 
 app = Flask(__name__, static_url_path='/static')
@@ -24,10 +24,10 @@ class Dungeon():
         self.clients = {}
         self.data = {}
 
-        self.team1 = {}
-        self.team2 = {}
+        self.team1 = Team()
+        self.team2 = Team()
 
-        self.game = None
+        self.game = Game(self.team1)
 
     def team1_start(self):
         self.game = Game(self.team1)
