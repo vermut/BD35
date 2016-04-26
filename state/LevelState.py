@@ -1,33 +1,41 @@
+import pyglet
+
 from Death import Death
 
+door = pyglet.media.load('static/jail_cell_door.wav', streaming=False)
+death = pyglet.media.load('static/nmh_scream1.wav', streaming=False)
 
 class LevelState:
     def __init__(self):
         self.A = list("+B")
         self.B = list("-C")
-        self.C = list("-")
+        self.C = list("-D")
+        self.D = list("-")
 
     def open_gate(self, gate):
         vars(self)[gate][0] = '+'
 
     def go(self, gate):
         if vars(self)[gate][0] is "-":
+            death.play()
             return Death(gate)
 
         if vars(self)[gate][0] is "?":
             print "HANDLE_SPECIAL"
 
-        self.open_gate(vars(self)[gate][1])
+        if len(vars(self)[gate]) > 1:
+            self.open_gate(vars(self)[gate][1])
         return self
 
     def status(self):
-        return [(k +'='+ ''.join(v)) for k,v in sorted(vars(self).items())]
+        return [(k + ' '.join(v)) for k,v in sorted(vars(self).items())]
 
     def gates(self):
         return {
             "A": {'x': 10, 'y': 10, 'style': self._class_for('A')},
             "B": {'x': 30, 'y': 30, 'style': self._class_for('B')},
-            "C": {'x': 60, 'y': 60, 'style': self._class_for('C')},
+            "C": {'x': 60, 'y': 90, 'style': self._class_for('C')},
+            "D": {'x': 90, 'y': 60, 'style': self._class_for('C')},
         }.items()
 
     def _class_for(self, gate):

@@ -8,12 +8,15 @@
 """
 from time import strftime
 
+import pyglet
 from flask import Flask, render_template, request
 
 # from flask.ext.sqlalchemy import SQLAlchemy
 from state.Game import Game
+from sensors import map_gate
 
 app = Flask(__name__, static_url_path='/static')
+door = pyglet.media.load('static/jail_cell_door.wav', streaming=False)
 
 
 class Dungeon():
@@ -52,14 +55,19 @@ def sensor_report():
                                       'time': strftime("%a, %d %b %Y %H:%M:%S +0000"),
                                       'voltage': content['voltage'] / 1000.0}
 
+    gate = map_gate(content)
+    if gate:
+        door.play()
+        dungeon.trigger(gate)
+
     return 'OK!'
 
 
-@app.route('/sensor_register', methods=['POST'])
-def sensor_register():
-    content = request.get_json(force=True)
-    dungeon.clients[content['id']] = {'startup_distance': content['startup_distance']}
-    return 'Registered!'
+# @app.route('/sensor_register', methods=['POST'])
+# def sensor_register():
+#     content = request.get_json(force=True)
+#     dungeon.clients[content['id']] = {'startup_distance': content['startup_distance']}
+#     return 'Registered!'
 
 
 @app.route('/team1_start')
