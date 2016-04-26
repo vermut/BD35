@@ -43,6 +43,10 @@ class LevelState:
         }.items()
 
     def _class_for(self, gate):
+        if gate == 'B' and not self.team.canGoViaBravo: return 'my-red'
+        if gate == 'C' and not self.team.canGoViaCharlie: return 'my-red'
+        if gate == 'D' and self.team.canGoViaCharlie: return 'my-red'
+
         return 'my-red' if vars(self)[gate][0] is "-" else ''
 
     def death(self, gate):
