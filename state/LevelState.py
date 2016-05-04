@@ -9,10 +9,25 @@ death = pyglet.media.load('static/nmh_scream1.wav', streaming=False)
 class LevelState:
     def __init__(self, team):
         self.A = list("-")
-        self.B = list("?")
-        self.C = list("?")
-        self.D = list("?")
-        self.E = list("-")
+        self.B = list("?")  # B or C
+        self.C = list("?")  # B or C
+        self.D = list("?")  # D if B
+        self.E = list("-F")
+        self.F = list("-H")
+        self.G = list("-")
+        self.H = list("-A")  # For fun
+        self.I = list("-K")
+        self.J = list("?")  # 1 +India 2 + L+N
+        self.K = list("-G")  # For fun
+        self.L = list("?")  # 15 sec with L+N
+        self.M = list("?")  # 3 times M<->O
+        self.N = list("?")  # 15 sec with L+N
+        self.O = list("?")  # 3 times M<->O
+        self.P = list("-")
+        self.Q = list("?")  # Locks everything until until they "come back"
+        self.S = list("-")
+        self.R = list("-")
+        self.T = list("-")
         self.team = team
 
     def open_gate(self, gate):
@@ -23,7 +38,7 @@ class LevelState:
             return self.death(gate)
 
         if vars(self)[gate][0] is "?":
-            special = getattr(self, 'special_'+gate)
+            special = getattr(self, 'special_' + gate)
             return special()
 
         if len(vars(self)[gate]) > 1:
@@ -73,4 +88,22 @@ class LevelState:
 
         # Must pass via D is B was open
         self.open_gate('E')
+        return self
+
+    def special_J(self):
+        return self
+
+    def special_L(self):
+        return self
+
+    def special_M(self):
+        return self
+
+    def special_N(self):
+        return self
+
+    def special_O(self):
+        return self
+
+    def special_Q(self):
         return self
