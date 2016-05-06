@@ -1,3 +1,5 @@
+import time
+
 import media
 
 from Death import Death
@@ -12,16 +14,16 @@ class LevelState:
         self.E = list("-F?")  # ?=music
         self.F = list("-H")
         self.G = list("-")
-        self.H = list("-H?")  # ?=music
+        self.H = list("-J?")  # ?=music
         self.I = list("-K")
-        self.J = list("?")  # 1 +India 2 + L+N
-        self.K = list("-G")
-        self.L = list("+L?")  # 15 sec with L+N (and locks everything)
-        self.M = list("+M?")  # 3 times M<->O
-        self.N = list("+M?")  # 15 sec with L+N
-        self.O = list("+O?")  # 3 times M<->O
+        self.J = list("-I?")  # 1 +India 2 + L+N
+        self.K = list("-J?")  # Notifies Juliet
+        self.L = list("-L?")  # 15 sec with L+N (and locks everything)
+        self.M = list("-M?")  # 3 times M<->O
+        self.N = list("-N?")  # 15 sec with L+N
+        self.O = list("-O?")  # 3 times M<->O
         self.P = list("-")
-        self.Q = list("+Q?")  # Locks everything until they "come back"
+        self.Q = list("-Q?")  # Locks everything until they "come back"
         self.S = list("-S?")
         self.R = list("-")
         self.T = list("-")
@@ -56,12 +58,26 @@ class LevelState:
             "C": {'x': 1020, 'y': 200, 'style': self._class_for('C')},
             "D": {'x': 988, 'y': 157, 'style': self._class_for('D')},
             "E": {'x': 700, 'y': 100, 'style': self._class_for('E')},
+            "F": {'x': 575, 'y': 205, 'style': self._class_for('F')},
+            "G": {'x': 540, 'y': 175, 'style': self._class_for('G')},
+            "H": {'x': 460, 'y': 313, 'style': self._class_for('H')},
+            "I": {'x': 430, 'y': 355, 'style': self._class_for('I')},
+            "J": {'x': 300, 'y': 320, 'style': self._class_for('J')},
+            "K": {'x': 275, 'y': 380, 'style': self._class_for('K')},
+            "L": {'x': 430, 'y': 205, 'style': self._class_for('L')},
+            "M": {'x': 445, 'y': 150, 'style': self._class_for('M')},
+            "N": {'x': 270, 'y': 205, 'style': self._class_for('N')},
+            "O": {'x': 260, 'y': 150, 'style': self._class_for('O')},
+            "P": {'x': 300, 'y': 100, 'style': self._class_for('P')},
+            "Q": {'x': 320, 'y': 40, 'style': self._class_for('Q')},
+            "S": {'x': 170, 'y': 150, 'style': self._class_for('S')},
+            "R": {'x': 130, 'y': 205, 'style': self._class_for('R')},
+            "T": {'x': 750, 'y': 292, 'style': self._class_for('T')},
         }.items()
 
     def _class_for(self, gate):
         if gate == 'B' and not self.team.canGoViaBravo: return 'my-red'
         if gate == 'C' and not self.team.canGoViaCharlie: return 'my-red'
-        if gate == 'D' and self.team.canGoViaCharlie: return 'my-red'
 
         return 'my-red' if vars(self)[gate][0] is "-" else ''
 
@@ -73,22 +89,22 @@ class LevelState:
         if not self.team.canGoViaBravo:
             return self.death('B')
 
-        self.music = media.puberty()
+        self.music = media.puberty
         return self
 
     def special_C(self):
         if not self.team.canGoViaCharlie:
             return self.death('C')
 
-        self.music = media.puberty()
+        self.music = media.puberty
         return self
 
     def special_E(self):
-        self.music = media.work()
+        self.music = media.work
         return self
 
     def special_H(self):
-        self.music = media.bedroom()
+        self.music = media.bedroom
         return self
 
     def special_J(self):
@@ -96,12 +112,12 @@ class LevelState:
 
     def special_L(self):
         # Todo set timer
-        self.music = media.mountains()
+        self.music = media.mountains
         return self
 
     def special_N(self):
         # Todo cancel timer
-        self.music = media.mountains()
+        self.music = media.mountains
         return self
 
     def special_M(self):
@@ -125,8 +141,14 @@ class LevelState:
         return self
 
     def special_Q(self):
+        if self.last_q and time.time() - self.last_q > 20:
+            self.open_gate('R')
+            self.open_gate('S')
+            media.door.play()  # Podskazka, chto vse ok
+
+        self.last_q = time.time()
         return self
 
     def special_S(self):
-        self.music = media.the_end()
+        self.music = media.the_end
         return self
