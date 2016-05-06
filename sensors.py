@@ -22,3 +22,10 @@ def map_gate(content):
             return mapping[content['id']][1]
 
     return None
+
+
+def map_name(id):
+    if id in mapping:
+        return ','.join(mapping[id]) if mapping[id][1] else mapping[id][0]
+
+    return None

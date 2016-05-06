@@ -7,3 +7,6 @@ class Death:
 
     def gates(self):
         return {}
+
+    def go(self, gate):
+        return self

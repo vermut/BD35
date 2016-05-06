@@ -1,9 +1,8 @@
-import pyglet
+import media
+
 
 from Death import Death
 
-door = pyglet.media.load('static/jail_cell_door.wav', streaming=False)
-death = pyglet.media.load('static/nmh_scream1.wav', streaming=False)
 
 
 class LevelState:
@@ -65,7 +64,7 @@ class LevelState:
         return 'my-red' if vars(self)[gate][0] is "-" else ''
 
     def death(self, gate):
-        death.play()
+        media.death.play()
         return Death(gate)
 
     def special_B(self):

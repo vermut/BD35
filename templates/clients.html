@@ -1,7 +1,11 @@
 <h3>Known clients</h3>
 <ul>
     {% for key in dungeon.clients %}
-    <li>{{ key }}:{{ dungeon.clients[key].startup_distance }}cm</li>
+    <li {% if (dungeon.clients[key].max_voltage - 0.05) > dungeon.clients[key].voltage %}
+            style="color: red"
+    {% endif %}>
+        {{ dungeon.clients[key].gates }}: {{ dungeon.clients[key].voltage }}/{{dungeon.clients[key].max_voltage}}
+    </li>
     {% endfor %}
 </ul>
 
