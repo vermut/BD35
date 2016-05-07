@@ -20,6 +20,7 @@ class Game():
 
     def trigger(self, gate):
         if self.state.last_gate is gate:
+            self.state.go(gate)
             return
 
         music = self.state.music

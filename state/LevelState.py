@@ -23,14 +23,16 @@ class LevelState:
         self.O = list("-O?")  # 3 times M<->O
         self.P = list("-")
         self.Q = list("-Q?")  # Locks everything until they "come back"
-        self.S = list("-S?")
-        self.R = list("-")
+        self.S = list("-R?")
+        self.R = list("-S")
         self.T = list("-")
         self.team = team
         self.music = media.dinner
 
         self.bravo_is_safe = False
         self.charlie_is_safe = False
+
+        self.kilo_is_complete = False
 
         self.m_count = 0
         self.o_count = 0
@@ -41,6 +43,9 @@ class LevelState:
 
     def open_gate(self, gate):
         vars(self)[gate][0] = '+'
+
+    def close_gate(self, gate):
+        vars(self)[gate][0] = '-'
 
     def go(self, gate):
         self.last_gate = gate
@@ -128,6 +133,13 @@ class LevelState:
         return self
 
     def special_J(self):
+        if self.kilo_is_complete:
+            self.open_gate('L')
+            self.open_gate('N')
+        return self
+
+    def special_K(self):
+        self.kilo_is_complete = True
         return self
 
     def special_L(self):
@@ -138,6 +150,14 @@ class LevelState:
     def special_N(self):
         # Todo cancel timer
         self.music = media.mountains
+
+        self.open_gate('M')
+        self.open_gate('O')
+
+        self.close_gate('E')
+        self.close_gate('H')
+        self.close_gate('F')
+
         return self
 
     def special_M(self):

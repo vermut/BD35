@@ -12,8 +12,6 @@ from time import strftime
 
 from flask import Flask, render_template, request
 
-import media
-# from flask.ext.sqlalchemy import SQLAlchemy
 from state.Game import Game, Team
 from sensors import map_gate, map_name
 
@@ -71,7 +69,6 @@ def sensor_report():
 
     gate = map_gate(content)
     if gate:
-        # media.door.play()
         dungeon.trigger(gate)
 
     # req = urllib2.Request(
@@ -80,13 +77,6 @@ def sensor_report():
     # urllib2.urlopen(req, json.dumps(content))
 
     return 'OK!'
-
-
-# @app.route('/sensor_register', methods=['POST'])
-# def sensor_register():
-#     content = request.get_json(force=True)
-#     dungeon.clients[content['id']] = {'startup_distance': content['startup_distance']}
-#     return 'Registered!'
 
 
 @app.route('/team1_start')
