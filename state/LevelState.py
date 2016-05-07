@@ -29,6 +29,10 @@ class LevelState:
         self.T = list("-")
         self.team = team
         self.music = media.intro()
+
+        self.bravo_is_safe = False
+        self.charlie_is_safe = False
+
         self.m_count = 0
         self.o_count = 0
 
@@ -76,8 +80,8 @@ class LevelState:
         }.items()
 
     def _class_for(self, gate):
-        if gate == 'B' and not self.team.canGoViaBravo: return 'my-red'
-        if gate == 'C' and not self.team.canGoViaCharlie: return 'my-red'
+        if gate == 'B' and not (self.team.canGoViaBravo or self.bravo_is_safe): return 'my-red'
+        if gate == 'C' and not (self.team.canGoViaCharlie or self.charlie_is_safe): return 'my-red'
 
         return 'my-red' if vars(self)[gate][0] is "-" else ''
 
@@ -86,15 +90,28 @@ class LevelState:
         return Death(gate)
 
     def special_B(self):
-        if not self.team.canGoViaBravo:
+        if not (self.team.canGoViaBravo or self.bravo_is_safe):
+            self.team.canGoViaBravo = True
+            self.team.canGoViaCharlie = False
             return self.death('B')
+
+        self.bravo_is_safe = True
+        self.team.canGoViaBravo = False
+        self.team.canGoViaCharlie = True
 
         self.music = media.puberty
         return self
 
     def special_C(self):
-        if not self.team.canGoViaCharlie:
+        if not (self.team.canGoViaCharlie or self.charlie_is_safe):
+            self.team.canGoViaBravo = False
+            self.team.canGoViaCharlie = True
             return self.death('C')
+
+        self.charlie_is_safe = True
+        self.team.canGoViaBravo = True
+        self.team.canGoViaCharlie = False
+
 
         self.music = media.puberty
         return self

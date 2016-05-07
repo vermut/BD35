@@ -6,7 +6,7 @@ from state.LevelState import LevelState
 class Team():
     def __init__(self):
         self.canGoViaBravo = False
-        self.canGoViaCharlie = True
+        self.canGoViaCharlie = False
 
 
 class Game():
