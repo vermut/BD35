@@ -1,7 +1,6 @@
 import time
 
 import media
-
 from Death import Death
 
 
@@ -28,13 +27,15 @@ class LevelState:
         self.R = list("-")
         self.T = list("-")
         self.team = team
-        self.music = media.intro()
+        self.music = media.dinner
 
         self.bravo_is_safe = False
         self.charlie_is_safe = False
 
         self.m_count = 0
         self.o_count = 0
+
+        self.last_q = 0
 
     def open_gate(self, gate):
         vars(self)[gate][0] = '+'
@@ -111,7 +112,6 @@ class LevelState:
         self.charlie_is_safe = True
         self.team.canGoViaBravo = True
         self.team.canGoViaCharlie = False
-
 
         self.music = media.puberty
         return self

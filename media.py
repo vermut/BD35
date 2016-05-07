@@ -2,11 +2,11 @@ import pyglet
 
 p = pyglet.media.Player()
 door = pyglet.media.load('static/jail_cell_door.wav', streaming=False)
-death = pyglet.media.load('static/FAIL.mp3', streaming=False)
+death = pyglet.media.load('static/nmh_scream1.wav', streaming=False)
 
 
 def intro():
-    _play('intermission.mp3')
+    _play('intermission.ogg')
 
 
 def dinner():

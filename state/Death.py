@@ -1,6 +1,10 @@
+import media
+
+
 class Death:
     def __init__(self, cause):
         self.cause = cause
+        self.music = media.intro
 
     def status(self):
         return "Death by " + self.cause

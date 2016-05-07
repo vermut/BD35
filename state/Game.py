@@ -16,15 +16,20 @@ class Game():
         self.state = LevelState(team)
 
     def trigger(self, gate):
+        music = self.state.music
         self.stateHistory.append(copy.deepcopy(self.state))
         self.state = self.state.go(gate)
-        #todo change music if needed
-        #todo don't trigger if same door
+
+        if self.state.music is not music:
+            self.state.music()
 
     def rewind(self):
+        music = self.state.music
         if len(self.stateHistory) > 0:
             self.state = self.stateHistory.pop()
 
-        #todo change music
+        if self.state.music is not music:
+            self.state.music()
+
 
 

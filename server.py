@@ -29,15 +29,12 @@ class Dungeon():
         self.team2 = Team()
 
         self.game = Game(self.team1)
-        media.intro()
 
     def team1_start(self):
         self.game = Game(self.team1)
-        media.room1()
 
     def team2_start(self):
         self.game = Game(self.team2)
-        media.room2()
 
     def trigger(self, gate):
         self.game.trigger(gate)
@@ -72,13 +69,13 @@ def sensor_report():
 
     gate = map_gate(content)
     if gate:
-        media.door.play()
+        # media.door.play()
         dungeon.trigger(gate)
 
-    req = urllib2.Request(
-        'http://search-dungeon-qcc7an54euyyq4vnstm2j673ve.us-east-1.es.amazonaws.com/dungeon/sensor_record')
-    req.add_header('Content-Type', 'application/json')
-    urllib2.urlopen(req, json.dumps(content))
+    # req = urllib2.Request(
+    #     'http://search-dungeon-qcc7an54euyyq4vnstm2j673ve.us-east-1.es.amazonaws.com/dungeon/sensor_record')
+    # req.add_header('Content-Type', 'application/json')
+    # urllib2.urlopen(req, json.dumps(content))
 
     return 'OK!'
 
@@ -122,4 +119,4 @@ def index():
 dungeon = Dungeon()
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', debug=False)
+    app.run('0.0.0.0', debug=True)
