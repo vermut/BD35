@@ -16,6 +16,8 @@ class Game():
         self.state = LevelState(team)
         self.state.music()
 
+        # Todo log last values
+
     def trigger(self, gate):
         if self.state.last_gate is gate:
             return

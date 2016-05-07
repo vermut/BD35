@@ -1,13 +1,13 @@
 <h3>Known clients</h3>
-<ul>
+<p>
     {% for key in dungeon.clients %}
-    <li {% if (dungeon.clients[key].max_voltage - 0.05) > dungeon.clients[key].voltage %}
+    <span {% if (dungeon.clients[key].max_voltage - 0.05) > dungeon.clients[key].voltage %}
             style="color: red"
     {% endif %}>
-        {{ dungeon.clients[key].gates }}: {{ dungeon.clients[key].voltage }}/{{dungeon.clients[key].max_voltage}}
-    </li>
+        {{ dungeon.clients[key].gates }}: {{ dungeon.clients[key].voltage }}/{{dungeon.clients[key].max_voltage}} |
+    </span>
     {% endfor %}
-</ul>
+</p>
 
 <a href="#" style="padding-left: 150px" onclick="$('#client_data').toggle()">Data</a><br>
 <ul id="client_data" style="display: none">
