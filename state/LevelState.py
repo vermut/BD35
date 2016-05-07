@@ -37,10 +37,13 @@ class LevelState:
 
         self.last_q = 0
 
+        self.last_gate = None
+
     def open_gate(self, gate):
         vars(self)[gate][0] = '+'
 
     def go(self, gate):
+        self.last_gate = gate
         if vars(self)[gate][0] is "-":
             return self.death(gate)
 

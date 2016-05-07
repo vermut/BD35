@@ -9,8 +9,9 @@
     {% endfor %}
 </ul>
 
-<h3>Data</h3>
-<ul>
+<a href="#" style="padding-left: 150px" onclick="$('#client_data').toggle()">Data</a><br>
+<ul id="client_data" style="display: none">
+    <li>Demo</li>
     {% for key in dungeon.data %}
     <li>{{ key }} => {{ dungeon.data[key].dist1 }} / {{ dungeon.data[key].dist2 }} @ {{ dungeon.data[key].time }} ... {{
         dungeon.data[key].voltage }}V
@@ -18,21 +19,12 @@
     {% endfor %}
 </ul>
 
-<h3>State and History</h3>
 {% if dungeon.game and dungeon.game.state %}
-{{ dungeon.game.state.status() }}
-
-<h5>State history</h5>
-<a href="#" onclick="$.get('/rewind')">Rewind</a>
-<table border="1">
+<a href="#" onclick="$.get('/rewind')">Rewind</a><br>
 {% for state in dungeon.game.stateHistory %}
-    <tr>
-        {% for gate in state.status() %}
-        <td>{{ gate }}</td>
-        {% endfor %}
-    </tr>
+{{state.last_gate }} |
 {% endfor %}
-</table>
+{{ dungeon.game.state.last_gate }}
 <div class="container">
     {% for gate, data in dungeon.game.state.gates() %}
     <a href="#" onclick="$.get('/go/{{gate}}')">

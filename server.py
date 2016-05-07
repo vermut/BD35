@@ -28,7 +28,7 @@ class Dungeon():
         self.team1 = Team()
         self.team2 = Team()
 
-        self.game = Game(self.team1)
+        self.game = None # Game(self.team1)
 
     def team1_start(self):
         self.game = Game(self.team1)

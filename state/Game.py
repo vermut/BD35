@@ -14,10 +14,15 @@ class Game():
         self.stateHistory = []
         self.team = team
         self.state = LevelState(team)
+        self.state.music()
 
     def trigger(self, gate):
+        if self.state.last_gate is gate:
+            return
+
         music = self.state.music
         self.stateHistory.append(copy.deepcopy(self.state))
+
         self.state = self.state.go(gate)
 
         if self.state.music is not music:
