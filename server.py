@@ -23,8 +23,8 @@ class Dungeon():
         self.clients = {}
         self.data = {}
 
-        self.team1 = Team()
-        self.team2 = Team()
+        self.team1 = Team("Team1")
+        self.team2 = Team("Team2")
 
         self.game = None
 

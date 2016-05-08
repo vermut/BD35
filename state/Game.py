@@ -4,9 +4,10 @@ from state.LevelState import LevelState
 
 
 class Team():
-    def __init__(self):
+    def __init__(self, myname):
         self.canGoViaBravo = False
         self.canGoViaCharlie = False
+        self.name = myname
 
 
 class Game():
@@ -15,8 +16,6 @@ class Game():
         self.team = team
         self.state = LevelState(team)
         self.state.music()
-
-        # Todo log last values
 
     def trigger(self, gate):
         if self.state.last_gate is gate:
@@ -38,6 +37,3 @@ class Game():
 
         if self.state.music is not music:
             self.state.music()
-
-
-

@@ -39,6 +39,10 @@ class LevelState:
 
         self.last_q = 0
 
+        self.l_gate_time = None
+        self.n_gate_time = None
+        self.ln_is_complete = False
+
         self.last_gate = None
 
     def open_gate(self, gate):
@@ -102,11 +106,15 @@ class LevelState:
         if not (self.team.canGoViaBravo or self.bravo_is_safe):
             self.team.canGoViaBravo = True
             self.team.canGoViaCharlie = False
+            print "Team {0} - bravo: {1}, charlie {2}".format(self.team.name, self.team.canGoViaBravo,
+                                                              self.team.canGoViaCharlie)
             return self.death('B')
 
         self.bravo_is_safe = True
         self.team.canGoViaBravo = False
         self.team.canGoViaCharlie = True
+        print "Team {0} - bravo: {1}, charlie {2}".format(self.team.name, self.team.canGoViaBravo,
+                                                          self.team.canGoViaCharlie)
 
         self.music = media.puberty
         return self
@@ -115,11 +123,15 @@ class LevelState:
         if not (self.team.canGoViaCharlie or self.charlie_is_safe):
             self.team.canGoViaBravo = False
             self.team.canGoViaCharlie = True
+            print "Team {0} - bravo: {1}, charlie {2}".format(self.team.name, self.team.canGoViaBravo,
+                                                              self.team.canGoViaCharlie)
             return self.death('C')
 
         self.charlie_is_safe = True
         self.team.canGoViaBravo = True
         self.team.canGoViaCharlie = False
+        print "Team {0} - bravo: {1}, charlie {2}".format(self.team.name, self.team.canGoViaBravo,
+                                                          self.team.canGoViaCharlie)
 
         self.music = media.puberty
         return self
@@ -136,6 +148,7 @@ class LevelState:
         if self.kilo_is_complete:
             self.open_gate('L')
             self.open_gate('N')
+            self.close_gate('H')
         return self
 
     def special_K(self):
@@ -143,20 +156,49 @@ class LevelState:
         return self
 
     def special_L(self):
-        # Todo set timer
-        self.music = media.mountains
+        if self.ln_is_complete:
+            return self
+
+        if self.n_gate_time:
+            if time.time() - self.n_gate_time < 10:
+                self.music = media.mountains
+
+                self.ln_is_complete = True
+                self.open_gate('M')
+                self.open_gate('O')
+
+                self.close_gate('E')
+                self.close_gate('H')
+                self.close_gate('F')
+            else:
+                return self.death('N timeout')
+
+        if not self.l_gate_time:
+            self.l_gate_time = time.time()
+
         return self
 
     def special_N(self):
-        # Todo cancel timer
-        self.music = media.mountains
+        if self.ln_is_complete:
+            return self
 
-        self.open_gate('M')
-        self.open_gate('O')
+        if self.l_gate_time:
+            if time.time() - self.l_gate_time < 10:
+                self.music = media.mountains
 
-        self.close_gate('E')
-        self.close_gate('H')
-        self.close_gate('F')
+                self.ln_is_complete = True
+                self.open_gate('M')
+                self.open_gate('O')
+
+                self.close_gate('E')
+                self.close_gate('H')
+                self.close_gate('F')
+            else:
+                return self.death('L timeout')
+
+        if not self.n_gate_time:
+            self.n_gate_time = time.time()
+            # todo start timer
 
         return self
 
