@@ -17,6 +17,7 @@ from sensors import map_gate, map_name
 
 app = Flask(__name__, static_url_path='/static')
 
+skip_flag = False
 
 class Dungeon():
     def __init__(self):
@@ -27,6 +28,8 @@ class Dungeon():
         self.team2 = Team("Team2")
 
         self.game = None
+        self.skip_flag = None
+        self.skip_gate = None
 
     def team1_start(self):
         self.game = Game(self.team1)
@@ -37,7 +40,10 @@ class Dungeon():
         self.game.state.last_gate = "Team2"
 
     def trigger(self, gate):
-        self.game.trigger(gate)
+        if gate is not self.skip_gate:
+            self.game.trigger(gate)
+        else:
+            self.skip_gate = None
 
     def rewind(self):
         self.game.rewind()
@@ -93,7 +99,12 @@ def team2_start():
 
 @app.route('/go/<gate>')
 def go(gate):
-    dungeon.trigger(gate)
+    if dungeon.skip_flag:
+        dungeon.skip_flag = False
+        dungeon.skip_gate = gate
+    else:
+        dungeon.trigger(gate)
+
     return "OK"
 
 
@@ -101,6 +112,11 @@ def go(gate):
 def rewind():
     dungeon.rewind()
     return "OK"
+
+@app.route('/skip')
+def skip():
+    dungeon.skip_flag = True
+    return "Skipping"
 
 
 @app.route('/')

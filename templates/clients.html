@@ -1,14 +1,3 @@
-<h3>Known clients</h3>
-<p>
-    {% for key in dungeon.clients %}
-    <span {% if (dungeon.clients[key].max_voltage - 0.05) > dungeon.clients[key].voltage %}
-            style="color: red"
-    {% endif %}>
-        {{ dungeon.clients[key].gates }}: {{ dungeon.clients[key].voltage }}/{{dungeon.clients[key].max_voltage}} |
-    </span>
-    {% endfor %}
-</p>
-
 <a href="#" style="padding-left: 150px" onclick="$('#client_data').toggle()">Data</a><br>
 <ul id="client_data" style="display: none">
     <li>Demo</li>
@@ -35,3 +24,13 @@
     <img src="static/map.png"/>
 </div>
 {% endif %}
+<h3>Known clients {{ dungeon.skip_flag }} {{ dungeon.skip_gate }} </h3>
+<p>
+    {% for key in dungeon.clients %}
+    <span {% if (dungeon.clients[key].max_voltage - 0.05) > dungeon.clients[key].voltage %}
+            style="color: red"
+    {% endif %}>
+        {{ dungeon.clients[key].gates }}: {{ dungeon.clients[key].voltage }}/{{dungeon.clients[key].max_voltage}} |
+    </span>
+    {% endfor %}
+</p>
